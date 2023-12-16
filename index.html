@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #list{
+            display:none;
+        }
+        #names{
+            background-color: cyan;
+            border-radius: 5px;
+        }
+        body{
+            display: flex;
+            justify-content: center;
+        }
+    </style>
+</head>
+<body>
+    <button onclick="showhide()" id="names">Click to see names</button>
+    <ol id="list"></ol>
+    <script>
+        const names = document.querySelector("#names");
+        const list = document.querySelector('#list');
+        fetch('https://jsonplaceholder.typicode.com/users')
+        .then(res => {
+           return res.json();
+        })
+        .then(data=>{
+            data.forEach(element => {
+                let li = document.createElement('li');
+                li.textContent=element.name;
+                list.appendChild(li);
+            })
+        })
+        .catch(error=>{
+            console.log(error);
+        })
+        let isclicked=true;
+        let showhide = function(){
+        if(isclicked){
+            list.style.display='block';
+            isclicked=false;
+            names.textContent='Hide';
+            names.style.backgroundColor='orange';
+        }else{
+            names.textContent='Click to see names';
+            names.style.backgroundColor='cyan';
+            list.style.display='none';
+            isclicked=true;
+        }}
+    </script>
+</body>
+</html>
